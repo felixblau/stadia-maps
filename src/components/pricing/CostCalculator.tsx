@@ -20,12 +20,12 @@ export default function CostCalculator() {
   }
 
   return (
-    <section className="px-16 py-16 max-w-[1280px] mx-auto">
-      <h2 className="font-heading font-semibold text-[40px] leading-[1.25] text-center mb-4">
+    <section className="px-6 md:px-16 py-16 max-w-[1280px] mx-auto">
+      <h2 className="font-heading font-semibold text-2xl md:text-[40px] leading-[1.25] text-center mb-4">
         Estimate your infrastructure cost: Instant clarity. Instant savings.
       </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-12">
         <div>
           <p className="font-body text-base text-warm-gray mb-6">
             Set your expected API volume using the sliders below. We'll instantly calculate your monthly cost

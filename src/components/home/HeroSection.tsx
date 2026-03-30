@@ -2,11 +2,11 @@ import Button from "@/components/ui/Button"
 
 export default function HeroSection() {
   return (
-    <section className="w-full px-16 py-16">
-      <div className="mx-auto max-w-[1280px] flex items-center gap-16">
+    <section className="w-full px-6 md:px-16 py-16">
+      <div className="mx-auto max-w-[1280px] flex flex-col md:flex-row items-center gap-8 md:gap-16">
         {/* Left side - Text content */}
         <div className="flex-1 space-y-6">
-          <h1 className="font-heading font-semibold text-[50px] leading-[1.25] text-text">
+          <h1 className="font-heading font-semibold text-3xl md:text-[50px] leading-[1.25] text-text">
             Location APIs Without Compromise
           </h1>
           <p className="font-body text-base leading-[1.25] text-text">
@@ -19,7 +19,7 @@ export default function HeroSection() {
         </div>
 
         {/* Right side - Map illustration */}
-        <div className="flex-1 relative">
+        <div className="flex-1 relative w-full">
           <div className="aspect-square w-full rounded-3xl bg-gradient-to-br from-blue-400 via-green-400 to-green-600 relative overflow-hidden shadow-xl">
             {/* Topographic-style curved lines */}
             <div className="absolute inset-0">

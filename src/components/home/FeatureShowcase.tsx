@@ -109,26 +109,26 @@ export default function FeatureShowcase() {
   ]
 
   return (
-    <section className="w-full px-16 py-16">
-      <div className="mx-auto max-w-[1280px] space-y-16">
-        <h2 className="font-heading font-semibold text-[40px] leading-[1.25] text-text text-center">
+    <section className="w-full px-6 md:px-16 py-16">
+      <div className="mx-auto max-w-[1280px] space-y-12 md:space-y-16">
+        <h2 className="font-heading font-semibold text-2xl md:text-[40px] leading-[1.25] text-text text-center">
           The Complete API Toolkit. Built to Scale.
         </h2>
 
-        <div className="space-y-20">
+        <div className="space-y-12 md:space-y-20">
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`flex items-center gap-12 ${
-                index % 2 === 1 ? "flex-row-reverse" : ""
+              className={`flex flex-col md:flex-row items-center gap-8 md:gap-12 ${
+                index % 2 === 1 ? "md:flex-row-reverse" : ""
               }`}
             >
               {/* Image/illustration side */}
-              <div className="flex-1">{feature.illustration}</div>
+              <div className="flex-1 w-full">{feature.illustration}</div>
 
               {/* Text side */}
               <div className="flex-1 space-y-6">
-                <h3 className="font-heading font-semibold text-[34px] leading-[1.25] text-text">
+                <h3 className="font-heading font-semibold text-2xl md:text-[34px] leading-[1.25] text-text">
                   {feature.title}
                 </h3>
                 <p className="font-body text-base text-text/70 leading-relaxed">

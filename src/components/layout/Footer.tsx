@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 const footerSections = [
   {
     title: "Overview",
@@ -33,13 +35,23 @@ const footerSections = [
 ]
 
 export default function Footer() {
+  const [openSections, setOpenSections] = useState<string[]>([])
+
+  const toggleSection = (title: string) => {
+    setOpenSections((prev) =>
+      prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title]
+    )
+  }
+
   return (
-    <footer className="bg-white px-16 py-6">
+    <footer className="bg-white px-6 md:px-16 py-6">
       <div className="flex items-center gap-2 font-heading font-semibold text-lg text-primary mb-6">
         <span className="text-2xl">⚡</span>
         <span>Stadia Maps</span>
       </div>
-      <div className="grid grid-cols-5 gap-6">
+
+      {/* Desktop layout */}
+      <div className="hidden md:grid grid-cols-5 gap-6">
         {footerSections.map((section) => (
           <div key={section.title} className="flex flex-col gap-2">
             <h4 className="font-body font-semibold text-lg text-text px-2 py-1">{section.title}</h4>
@@ -76,6 +88,56 @@ export default function Footer() {
           </div>
         ))}
       </div>
+
+      {/* Mobile accordion layout */}
+      <div className="md:hidden flex flex-col gap-4">
+        {footerSections.map((section) => (
+          <div key={section.title} className="border-b border-border-ui pb-4">
+            <button
+              onClick={() => toggleSection(section.title)}
+              className="flex items-center justify-between w-full font-body font-semibold text-lg text-text py-2"
+            >
+              {section.title}
+              <span className={`transition-transform ${openSections.includes(section.title) ? "rotate-180" : ""}`}>▾</span>
+            </button>
+            {openSections.includes(section.title) && (
+              <div className="mt-2 space-y-3">
+                {section.links && (
+                  <ul className="flex flex-col gap-1">
+                    {(Array.isArray(section.links) ? section.links : []).map((link) => (
+                      <li key={typeof link === "string" ? link : link.label}>
+                        <a href="#" className="block font-body text-base text-text/70 hover:text-text leading-[1.25]">
+                          {typeof link === "string" ? link : link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {section.extra && (
+                  <div className="mt-3">
+                    <h4 className="font-body font-semibold text-base text-text mb-1">{section.extra.title}</h4>
+                    <ul className="flex flex-col gap-1">
+                      {section.extra.links.map((link) => (
+                        <li key={link}>
+                          <a href="#" className="block font-body text-base text-text/70 hover:text-text leading-[1.25]">{link}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {section.bottom && (
+                  <div className="mt-3 flex flex-col gap-1">
+                    {section.bottom.map((link) => (
+                      <a key={link} href="#" className="block font-body text-base text-text/70 hover:text-text leading-[1.25]">{link}</a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
       <div className="mt-6 text-xs text-text/70 font-body">© 2025 stadiamaps.com</div>
     </footer>
   )

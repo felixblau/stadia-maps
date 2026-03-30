@@ -19,10 +19,10 @@ export default function BlogPost() {
   const relatedPosts = blogPosts.filter((p) => p.slug !== slug).slice(0, 3)
 
   return (
-    <div className="px-16 py-16 max-w-[1280px] mx-auto">
-      <div className="flex gap-12">
+    <div className="px-6 md:px-16 py-16 max-w-[1280px] mx-auto">
+      <div className="flex flex-col md:flex-row gap-8 md:gap-12">
         {/* Sidebar */}
-        <aside className="w-64 sticky top-16 self-start">
+        <aside className="hidden md:block w-64 sticky top-16 self-start">
           <div className="font-heading font-semibold text-sm text-text mb-4">Table of Contents</div>
           <nav className="flex flex-col gap-2">
             <a href="#introduction" className="font-body text-sm text-text/70 hover:text-accent transition-colors">
@@ -48,7 +48,7 @@ export default function BlogPost() {
 
         {/* Main Content */}
         <main className="flex-1 max-w-3xl">
-          <h1 className="font-heading font-semibold text-[50px] text-text mb-4">{post.title}</h1>
+          <h1 className="font-heading font-semibold text-3xl md:text-[50px] text-text mb-4">{post.title}</h1>
           <div className="flex items-center gap-2 font-body text-base text-text/70 mb-8">
             <span>Stadia Maps Team</span>
             <span>•</span>
@@ -108,8 +108,8 @@ fetch('https://api.stadiamaps.com/v1/tiles', {
 
           {/* Related Posts */}
           <div className="mt-16 pt-16 border-t border-bg-neutral">
-            <h2 className="font-heading font-semibold text-3xl text-text mb-8">Related Posts</h2>
-            <div className="grid grid-cols-3 gap-6">
+            <h2 className="font-heading font-semibold text-2xl md:text-3xl text-text mb-8">Related Posts</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedPosts.map((relatedPost) => (
                 <BlogCard
                   key={relatedPost.slug}
