@@ -6,6 +6,8 @@ import Product from "@/pages/Product"
 import BlogList from "@/pages/BlogList"
 import BlogPost from "@/pages/BlogPost"
 import FAQs from "@/pages/FAQs"
+import Logistics from "@/pages/Logistics"
+import SwitchFromMapbox from "@/pages/SwitchFromMapbox"
 
 export default function App() {
   return (
@@ -18,6 +20,8 @@ export default function App() {
           <Route path="blog" element={<BlogList />} />
           <Route path="blog/:slug" element={<BlogPost />} />
           <Route path="faqs" element={<FAQs />} />
+          <Route path="logistics" element={<Logistics />} />
+          <Route path="switch-from-mapbox" element={<SwitchFromMapbox />} />
         </Route>
       </Routes>
     </BrowserRouter>
