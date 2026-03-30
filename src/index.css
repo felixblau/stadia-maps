@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #004E98;
+  --color-accent: #F26200;
+  --color-accent-bright: #FF6700;
+  --color-text: #282B2B;
+  --color-warm-gray: #717182;
+  --color-bg-neutral: #EBEBEB;
+  --color-border-ui: #C0C0C0;
+
+  --font-heading: "Inter", sans-serif;
+  --font-body: "Source Sans Pro", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-code: "Fira Code", monospace;
+
+  --spacing-page: 64px;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+  }
+}
