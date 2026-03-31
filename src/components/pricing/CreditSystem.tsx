@@ -1,46 +1,46 @@
 export default function CreditSystem() {
   return (
-    <section className="px-16 py-16 max-w-[1280px] mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div>
-          <h2 className="font-heading font-semibold text-[40px] leading-[1.25] mb-4">
+    <section className="px-6 md:px-20 py-16 max-w-[1440px] mx-auto">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Left column - heading */}
+        <div className="flex flex-col gap-8 py-6 lg:w-1/2">
+          <h2 className="font-heading font-semibold text-[32px] md:text-[40px] leading-[1.25]">
             The Stadia Maps Credit System: Ultimate transparency. Zero billing shock.
           </h2>
-          <p className="font-body text-base text-warm-gray">
-            We've built a unified credit system that consolidates all our location APIs into a single, predictable
-            unit. No more juggling multiple rate cards or trying to predict which API will cost what. Credits give
-            you complete visibility into your usage and costs—before you commit.
+          <p className="font-heading font-normal text-xl md:text-2xl leading-[1.5]">
+            We cut through the complexity by consolidating all API interactions into Credits, a
+            single, universal currency. This level of transparency and predictability frees you to
+            innovate with confidence.
           </p>
         </div>
 
-        <div className="space-y-6">
-          <div>
-            <h3 className="font-heading font-semibold text-[24px] mb-2">
+        {/* Right column - talking points */}
+        <div className="flex flex-col lg:w-1/2">
+          <div className="flex flex-col gap-4 border-b border-bg-neutral p-6">
+            <h3 className="font-heading font-normal text-2xl leading-[1.5]">
               Eliminate Billing Shock
             </h3>
-            <p className="font-body text-base text-warm-gray">
-              Every API call costs a flat, predictable amount of credits. Geocoding, routing, maps, autocomplete—all
-              priced transparently. You'll always know exactly what you're paying for.
+            <p className="font-body text-lg leading-[1.25] opacity-75">
+              Every plan includes a clear, fixed pool of Credits. Our commitment is to opt-in
+              scaling, protecting you from unexpected bills, and keeping you in complete control of
+              your budget.
             </p>
           </div>
 
-          <div>
-            <h3 className="font-heading font-semibold text-[24px] mb-2">
+          <div className="flex flex-col gap-4 border-b border-bg-neutral p-6">
+            <h3 className="font-heading font-normal text-2xl leading-[1.5]">
               Scale with Predictability
             </h3>
-            <p className="font-body text-base text-warm-gray">
-              Choose a plan that fits your usage, and scale up or down as needed. Our flexible credit system grows
-              with your business—no surprises, no penalties, no stress.
+            <p className="font-body text-lg leading-[1.25] opacity-75">
+              No punitive fees, no forced migrations. Grow on your own terms with flexible plans for
+              enterprise confidence and guaranteed SLA confidence.
             </p>
           </div>
 
-          <div>
-            <h3 className="font-heading font-semibold text-[24px] mb-2">
-              Ship Faster
-            </h3>
-            <p className="font-body text-base text-warm-gray">
-              Stop building complex billing logic and start building features. Our developer-first design means
-              you can integrate once and use any of our APIs without rearchitecting your billing system.
+          <div className="flex flex-col gap-4 border-b border-bg-neutral p-6">
+            <h3 className="font-heading font-normal text-2xl leading-[1.5]">Ship Faster</h3>
+            <p className="font-body text-lg leading-[1.25] opacity-75">
+              Intuitive plans designed by developers for immediate, stress-free integration.
             </p>
           </div>
         </div>

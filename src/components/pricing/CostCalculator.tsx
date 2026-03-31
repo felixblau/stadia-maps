@@ -1,143 +1,91 @@
 import { useState } from "react"
 
+const parameters = [
+  { id: "param1", label: "Parameter 1", description: "Neque diam ac et elementum.", max: 50, initial: 5 },
+  { id: "param2", label: "Parameter 2", description: "Morbi nunc nunc massa nullam donec at tempus enim sagittis.", max: 100, initial: 12 },
+  { id: "param3", label: "Parameter 3", description: "Nullam porttitor nunc ultrices eros donec faucibus nibh sem.", max: 50, initial: 3 },
+  { id: "param4", label: "Parameter 4", description: "Pharetra sed integer quis malesuada.", max: 500, initial: 100 },
+]
+
 export default function CostCalculator() {
-  const [geocoding, setGeocoding] = useState(100000)
-  const [palladium, setPalladium] = useState(50000)
-  const [matrix, setMatrix] = useState(10000)
-  const [routerTiles, setRouterTiles] = useState(25000)
+  const [values, setValues] = useState<Record<string, number>>(
+    Object.fromEntries(parameters.map((p) => [p.id, p.initial]))
+  )
 
-  // Simple plan suggestion logic based on total API calls
-  const totalCalls = geocoding + palladium + matrix + routerTiles
+  const total = Object.values(values).reduce((a, b) => a + b, 0)
   let suggestedPlan = "Free"
-  if (totalCalls > 5000000) suggestedPlan = "Professional"
-  else if (totalCalls > 1000000) suggestedPlan = "Standard"
-  else if (totalCalls > 200000) suggestedPlan = "Essentials"
-
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
-    if (num >= 1000) return `${(num / 1000).toFixed(0)}K`
-    return num.toString()
-  }
+  if (total > 200) suggestedPlan = "Professional"
+  else if (total > 100) suggestedPlan = "Standard"
+  else if (total > 20) suggestedPlan = "Essentials"
 
   return (
-    <section className="px-6 md:px-16 py-16 max-w-[1280px] mx-auto">
-      <h2 className="font-heading font-semibold text-2xl md:text-[40px] leading-[1.25] text-center mb-4">
-        Estimate your infrastructure cost: Instant clarity. Instant savings.
-      </h2>
+    <section
+      className="px-6 md:px-20 py-16"
+      style={{
+        backgroundImage:
+          "linear-gradient(90deg, rgba(255,255,255,0.75), rgba(255,255,255,0.75)), linear-gradient(253deg, #F1F8FF 1.7%, #659ACC 101.4%)",
+      }}
+    >
+      <div className="max-w-[1280px] mx-auto">
+        <h2 className="font-heading font-semibold text-[32px] md:text-[40px] leading-[1.25] text-center mb-8">
+          Estimate your infrastructure cost:
+          <br />
+          Instant clarity. Instant savings.
+        </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mt-12">
-        <div>
-          <p className="font-body text-base text-warm-gray mb-6">
-            Set your expected API volume using the sliders below. We'll instantly calculate your monthly cost
-            and suggest the best plan for your needs. No hidden fees, no surprises—just transparent pricing
-            that scales with you.
-          </p>
-        </div>
-
-        <div className="space-y-8">
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label htmlFor="geocoding" className="font-heading font-semibold text-[18px]">
-                Geocoding
-              </label>
-              <span className="font-mono text-base text-warm-gray">
-                {formatNumber(geocoding)} calls/mo
-              </span>
-            </div>
-            <input
-              id="geocoding"
-              type="range"
-              min="0"
-              max="10000000"
-              step="10000"
-              value={geocoding}
-              onChange={(e) => setGeocoding(Number(e.target.value))}
-              className="w-full h-2 bg-bg-neutral rounded-lg appearance-none cursor-pointer accent-accent-bright"
-            />
-            <p className="text-sm text-warm-gray mt-1">
-              Equivalent to ~{Math.round(geocoding / 1000)} addresses per day
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          {/* Left description */}
+          <div className="lg:w-[400px] flex flex-col gap-6">
+            <p className="font-heading font-normal text-xl md:text-2xl leading-[1.5]">
+              Set your expected API volume using the sliders below. Instantly preview your estimated
+              spend and our recommended plan based on your deployment requirements.
+            </p>
+            <p className="font-heading font-semibold text-xl md:text-2xl leading-[1.5]">
+              No hidden calculators. No required emails.
             </p>
           </div>
 
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label htmlFor="palladium" className="font-heading font-semibold text-[18px]">
-                Palladium Search
-              </label>
-              <span className="font-mono text-base text-warm-gray">
-                {formatNumber(palladium)} calls/mo
-              </span>
-            </div>
-            <input
-              id="palladium"
-              type="range"
-              min="0"
-              max="5000000"
-              step="5000"
-              value={palladium}
-              onChange={(e) => setPalladium(Number(e.target.value))}
-              className="w-full h-2 bg-bg-neutral rounded-lg appearance-none cursor-pointer accent-accent-bright"
-            />
-            <p className="text-sm text-warm-gray mt-1">
-              Equivalent to ~{Math.round(palladium / 1000)} searches per day
-            </p>
-          </div>
+          {/* Right sliders */}
+          <div className="flex-1 bg-white rounded-2xl px-6 py-4">
+            {parameters.map((param, i) => (
+              <div
+                key={param.id}
+                className={`flex flex-col md:flex-row gap-4 md:items-start py-6 ${
+                  i < parameters.length - 1 ? "border-b border-bg-neutral" : "border-b border-text"
+                }`}
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="font-body font-semibold text-lg leading-[1.25]">{param.label}</p>
+                  <p className="font-body text-base leading-[1.25]">{param.description}</p>
+                </div>
+                <div className="flex items-center gap-6 shrink-0">
+                  <input
+                    type="range"
+                    min={0}
+                    max={param.max}
+                    value={values[param.id]}
+                    onChange={(e) =>
+                      setValues((v) => ({ ...v, [param.id]: Number(e.target.value) }))
+                    }
+                    className="w-[250px] md:w-[368px] h-[6px] bg-black/20 rounded-[3px] appearance-none cursor-pointer
+                      [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6
+                      [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white
+                      [&::-webkit-slider-thumb]:shadow-[0_0.5px_4px_rgba(0,0,0,0.12),0_6px_13px_rgba(0,0,0,0.12)]"
+                  />
+                  <div className="w-14 h-9 border border-bg-neutral rounded-lg flex items-center justify-center">
+                    <span className="font-body text-base text-center">{values[param.id]}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
 
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label htmlFor="matrix" className="font-heading font-semibold text-[18px]">
-                Distance Matrix
-              </label>
-              <span className="font-mono text-base text-warm-gray">
-                {formatNumber(matrix)} calls/mo
-              </span>
+            {/* Suggested plan */}
+            <div className="py-4 text-right">
+              <p className="font-body text-lg leading-[1.25]">
+                <span>Suggested plan: </span>
+                <span className="font-body font-semibold text-primary">{suggestedPlan}</span>
+              </p>
             </div>
-            <input
-              id="matrix"
-              type="range"
-              min="0"
-              max="1000000"
-              step="1000"
-              value={matrix}
-              onChange={(e) => setMatrix(Number(e.target.value))}
-              className="w-full h-2 bg-bg-neutral rounded-lg appearance-none cursor-pointer accent-accent-bright"
-            />
-            <p className="text-sm text-warm-gray mt-1">
-              Equivalent to ~{Math.round(matrix / 30)} calculations per day
-            </p>
-          </div>
-
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label htmlFor="routerTiles" className="font-heading font-semibold text-[18px]">
-                Router Tiles
-              </label>
-              <span className="font-mono text-base text-warm-gray">
-                {formatNumber(routerTiles)} tiles/mo
-              </span>
-            </div>
-            <input
-              id="routerTiles"
-              type="range"
-              min="0"
-              max="2000000"
-              step="5000"
-              value={routerTiles}
-              onChange={(e) => setRouterTiles(Number(e.target.value))}
-              className="w-full h-2 bg-bg-neutral rounded-lg appearance-none cursor-pointer accent-accent-bright"
-            />
-            <p className="text-sm text-warm-gray mt-1">
-              Equivalent to ~{Math.round(routerTiles / 1000)} tile requests per day
-            </p>
-          </div>
-
-          <div className="pt-6 border-t border-border-ui">
-            <p className="font-body text-base text-warm-gray mb-2">
-              Based on your usage estimate:
-            </p>
-            <p className="font-heading font-semibold text-[24px] text-accent">
-              Suggested plan: {suggestedPlan}
-            </p>
           </div>
         </div>
       </div>
