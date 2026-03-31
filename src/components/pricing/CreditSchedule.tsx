@@ -27,26 +27,9 @@ const creditRows = [
   ]},
 ]
 
-function ChevronIcon({ open }: { open: boolean }) {
-  return (
-    <svg
-      className={`w-5 h-5 text-warm-gray transition-transform ${open ? "rotate-180" : ""}`}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-    </svg>
-  )
-}
-
 export default function CreditSchedule() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
-
-  const toggle = (i: number) => {
-    setOpenIndex(openIndex === i ? null : i)
-  }
+  const [activeTab, setActiveTab] = useState(0)
+  const activeGroup = creditRows[activeTab]
 
   return (
     <section className="px-6 md:px-20 py-16 max-w-[1440px] mx-auto">
@@ -58,34 +41,48 @@ export default function CreditSchedule() {
       </p>
 
       <div className="max-w-[900px] mx-auto">
-        {creditRows.map((group, i) => (
-          <div key={group.category} className="border-b border-bg-neutral">
+        {/* Tabs */}
+        <div className="flex gap-1 border-b border-bg-neutral mb-0 overflow-x-auto">
+          {creditRows.map((group, i) => (
             <button
-              onClick={() => toggle(i)}
-              className="w-full flex items-center justify-between px-4 py-3.5 cursor-pointer hover:bg-bg-neutral/20 transition-colors"
+              key={group.category}
+              onClick={() => setActiveTab(i)}
+              className={`px-4 py-2.5 font-heading font-semibold text-sm whitespace-nowrap transition-colors cursor-pointer rounded-t-lg ${
+                i === activeTab
+                  ? "bg-white text-primary border border-bg-neutral border-b-white -mb-px"
+                  : "text-warm-gray hover:text-text"
+              }`}
             >
-              <h3 className="font-heading font-semibold text-base">
-                {group.category}
-              </h3>
-              <ChevronIcon open={openIndex === i} />
+              {group.category}
             </button>
-            {openIndex === i && (
-              <div className="pb-2">
-                {group.items.map((item) => (
-                  <div
-                    key={item.name}
-                    className="flex justify-between items-center px-4 py-2.5 ml-4 border-b border-bg-neutral/50 last:border-0"
-                  >
-                    <span className="font-body text-base">{item.name}</span>
-                    <span className="font-mono text-sm text-warm-gray whitespace-nowrap ml-4">
-                      {item.credits}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* Table for active tab */}
+        <div className="bg-white rounded-b-lg">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b-2 border-primary">
+                <th className="text-left font-heading font-semibold text-base py-3 px-4">
+                  Request Type
+                </th>
+                <th className="text-right font-heading font-semibold text-base py-3 px-4 w-[200px]">
+                  Credit Cost
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {activeGroup.items.map((item) => (
+                <tr key={item.name} className="border-b border-bg-neutral">
+                  <td className="font-body text-base py-2.5 px-4">{item.name}</td>
+                  <td className="font-mono text-sm text-warm-gray py-2.5 px-4 text-right">
+                    {item.credits}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   )
