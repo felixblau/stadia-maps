@@ -1,15 +1,13 @@
-const features = [
+type CellValue = true | false | string
+
+const features: { category: string; items: { name: string; free: CellValue; starter: CellValue; standard: CellValue; pro: CellValue }[] }[] = [
   {
-    category: "Basemaps",
+    category: "Maps",
     items: [
       { name: "Vector Basemaps", free: true, starter: true, standard: true, pro: true },
       { name: "Raster Basemaps", free: true, starter: true, standard: true, pro: true },
       { name: "Satellite Imagery", free: false, starter: false, standard: true, pro: true },
-    ],
-  },
-  {
-    category: "Maps",
-    items: [
+      { name: "Additional Data Tilesets", free: true, starter: true, standard: true, pro: true },
       { name: "Static Maps", free: false, starter: true, standard: true, pro: true },
       { name: "Cacheable Static Maps", free: false, starter: true, standard: true, pro: true },
     ],
@@ -17,24 +15,37 @@ const features = [
   {
     category: "Search & Geocoding",
     items: [
-      { name: "Autocomplete Search", free: true, starter: true, standard: true, pro: true },
-      { name: "Geocoding APIs", free: true, starter: true, standard: true, pro: true },
+      { name: "Autocomplete Search v2", free: true, starter: true, standard: true, pro: true },
+      { name: "Autocomplete Search v1", free: true, starter: true, standard: true, pro: true },
+      { name: "Forward Geocoding", free: "Temp storage", starter: "Temp storage", standard: "Persistent storage", pro: "Persistent storage" },
+      { name: "Structured Geocoding", free: false, starter: "Temp storage", standard: "Persistent storage", pro: "Persistent storage" },
+      { name: "Reverse Geocoding", free: false, starter: "Temp storage", standard: "Persistent storage", pro: "Persistent storage" },
+      { name: "Bulk Geocoding", free: false, starter: false, standard: true, pro: true },
+      { name: "Place Lookup", free: "Temp storage", starter: "Temp storage", standard: "Persistent storage", pro: "Persistent storage" },
     ],
   },
   {
     category: "Routing & Navigation",
     items: [
-      { name: "Routing APIs", free: true, starter: true, standard: true, pro: true },
-      { name: "Optimized Routing", free: true, starter: true, standard: true, pro: true },
-      { name: "Time/Distance Matrix", free: true, starter: true, standard: true, pro: true },
-      { name: "Isochrones", free: true, starter: true, standard: true, pro: true },
+      { name: "Standard Routing", free: true, starter: true, standard: true, pro: true },
+      { name: "Nearest Roads", free: false, starter: false, standard: true, pro: true },
+      { name: "Map Matching", free: false, starter: false, standard: true, pro: true },
+      { name: "Trace Attributes", free: false, starter: false, standard: true, pro: true },
+      { name: "Isochrones", free: false, starter: false, standard: true, pro: true },
+      { name: "Optimized Routing", free: false, starter: false, standard: true, pro: true },
+      { name: "Time/Distance Matrix", free: false, starter: false, standard: "625 elements", pro: "10,000 elements" },
     ],
   },
   {
-    category: "Other",
+    category: "Data APIs",
     items: [
       { name: "Time Zones", free: true, starter: true, standard: true, pro: true },
-      { name: "Elevation", free: true, starter: true, standard: true, pro: true },
+      { name: "Elevation", free: false, starter: true, standard: true, pro: true },
+    ],
+  },
+  {
+    category: "Platform",
+    items: [
       { name: "Commercial Use", free: false, starter: true, standard: true, pro: true },
       { name: "Priority Support", free: false, starter: false, standard: false, pro: true },
     ],
@@ -65,10 +76,20 @@ function Cross() {
   )
 }
 
+function Cell({ value }: { value: CellValue }) {
+  if (value === true) return <Check />
+  if (value === false) return <Cross />
+  return (
+    <span className="font-body text-xs leading-tight text-center block text-warm-gray">
+      {value}
+    </span>
+  )
+}
+
 export default function FeatureComparison() {
   return (
     <section className="px-6 md:px-20 py-16 bg-bg-neutral/20">
-      <div className="max-w-[900px] mx-auto">
+      <div className="max-w-[960px] mx-auto">
         <h2 className="font-heading font-semibold text-[32px] md:text-[40px] leading-[1.25] text-center mb-10">
           Feature Comparison
         </h2>
@@ -77,17 +98,27 @@ export default function FeatureComparison() {
           <table className="w-full">
             <thead>
               <tr className="border-b-2 border-primary">
-                <th className="text-left font-heading font-semibold text-base py-3 pr-4">Feature</th>
-                <th className="text-center font-heading font-semibold text-base py-3 w-[100px]">Free</th>
-                <th className="text-center font-heading font-semibold text-base py-3 w-[100px]">Starter</th>
-                <th className="text-center font-heading font-semibold text-base py-3 w-[100px]">Standard</th>
-                <th className="text-center font-heading font-semibold text-base py-3 w-[100px]">Professional</th>
+                <th className="text-left font-heading font-semibold text-base py-3 pr-4">
+                  Feature
+                </th>
+                <th className="text-center font-heading font-semibold text-base py-3 w-[110px]">
+                  Free
+                </th>
+                <th className="text-center font-heading font-semibold text-base py-3 w-[110px]">
+                  Starter
+                </th>
+                <th className="text-center font-heading font-semibold text-base py-3 w-[110px]">
+                  Standard
+                </th>
+                <th className="text-center font-heading font-semibold text-base py-3 w-[110px]">
+                  Professional
+                </th>
               </tr>
             </thead>
             <tbody>
               {features.map((group) => (
-                <>
-                  <tr key={group.category}>
+                <Fragment key={group.category}>
+                  <tr>
                     <td
                       colSpan={5}
                       className="font-heading font-semibold text-sm uppercase tracking-wider pt-6 pb-2 text-warm-gray"
@@ -98,13 +129,21 @@ export default function FeatureComparison() {
                   {group.items.map((item) => (
                     <tr key={item.name} className="border-b border-bg-neutral">
                       <td className="font-body text-base py-2.5 pr-4">{item.name}</td>
-                      <td className="py-2.5">{item.free ? <Check /> : <Cross />}</td>
-                      <td className="py-2.5">{item.starter ? <Check /> : <Cross />}</td>
-                      <td className="py-2.5">{item.standard ? <Check /> : <Cross />}</td>
-                      <td className="py-2.5">{item.pro ? <Check /> : <Cross />}</td>
+                      <td className="py-2.5">
+                        <Cell value={item.free} />
+                      </td>
+                      <td className="py-2.5">
+                        <Cell value={item.starter} />
+                      </td>
+                      <td className="py-2.5">
+                        <Cell value={item.standard} />
+                      </td>
+                      <td className="py-2.5">
+                        <Cell value={item.pro} />
+                      </td>
                     </tr>
                   ))}
-                </>
+                </Fragment>
               ))}
             </tbody>
           </table>
@@ -113,3 +152,5 @@ export default function FeatureComparison() {
     </section>
   )
 }
+
+import { Fragment } from "react"
