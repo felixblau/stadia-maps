@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 type CellValue = true | false | string
 
 const features: { category: string; items: { name: string; free: CellValue; starter: CellValue; standard: CellValue; pro: CellValue }[] }[] = [
@@ -87,6 +89,9 @@ function Cell({ value }: { value: CellValue }) {
 }
 
 export default function FeatureComparison() {
+  const [activeTab, setActiveTab] = useState(0)
+  const activeGroup = features[activeTab]
+
   return (
     <section className="px-6 md:px-20 py-16 bg-bg-neutral/20">
       <div className="max-w-[960px] mx-auto">
@@ -94,11 +99,29 @@ export default function FeatureComparison() {
           Feature Comparison
         </h2>
 
-        <div className="overflow-x-auto">
+        {/* Tabs */}
+        <div className="flex gap-1 border-b border-bg-neutral mb-0 overflow-x-auto">
+          {features.map((group, i) => (
+            <button
+              key={group.category}
+              onClick={() => setActiveTab(i)}
+              className={`px-4 py-2.5 font-heading font-semibold text-sm whitespace-nowrap transition-colors cursor-pointer rounded-t-lg ${
+                i === activeTab
+                  ? "bg-white text-primary border border-bg-neutral border-b-white -mb-px"
+                  : "text-warm-gray hover:text-text"
+              }`}
+            >
+              {group.category}
+            </button>
+          ))}
+        </div>
+
+        {/* Table for active tab */}
+        <div className="bg-white rounded-b-lg overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b-2 border-primary">
-                <th className="text-left font-heading font-semibold text-base py-3 pr-4">
+                <th className="text-left font-heading font-semibold text-base py-3 px-4 pr-4">
                   Feature
                 </th>
                 <th className="text-center font-heading font-semibold text-base py-3 w-[110px]">
@@ -116,34 +139,14 @@ export default function FeatureComparison() {
               </tr>
             </thead>
             <tbody>
-              {features.map((group) => (
-                <Fragment key={group.category}>
-                  <tr>
-                    <td
-                      colSpan={5}
-                      className="font-heading font-semibold text-sm uppercase tracking-wider pt-6 pb-2 text-warm-gray"
-                    >
-                      {group.category}
-                    </td>
-                  </tr>
-                  {group.items.map((item) => (
-                    <tr key={item.name} className="border-b border-bg-neutral">
-                      <td className="font-body text-base py-2.5 pr-4">{item.name}</td>
-                      <td className="py-2.5">
-                        <Cell value={item.free} />
-                      </td>
-                      <td className="py-2.5">
-                        <Cell value={item.starter} />
-                      </td>
-                      <td className="py-2.5">
-                        <Cell value={item.standard} />
-                      </td>
-                      <td className="py-2.5">
-                        <Cell value={item.pro} />
-                      </td>
-                    </tr>
-                  ))}
-                </Fragment>
+              {activeGroup.items.map((item) => (
+                <tr key={item.name} className="border-b border-bg-neutral">
+                  <td className="font-body text-base py-2.5 px-4 pr-4">{item.name}</td>
+                  <td className="py-2.5"><Cell value={item.free} /></td>
+                  <td className="py-2.5"><Cell value={item.starter} /></td>
+                  <td className="py-2.5"><Cell value={item.standard} /></td>
+                  <td className="py-2.5"><Cell value={item.pro} /></td>
+                </tr>
               ))}
             </tbody>
           </table>
@@ -152,5 +155,3 @@ export default function FeatureComparison() {
     </section>
   )
 }
-
-import { Fragment } from "react"
