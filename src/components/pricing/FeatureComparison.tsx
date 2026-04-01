@@ -104,9 +104,12 @@ export default function FeatureComparison() {
   return (
     <section className="px-6 md:px-20 py-16 bg-bg-neutral/20">
       <div className="max-w-[1060px] mx-auto">
-        <h2 className="font-heading font-semibold text-[32px] md:text-[40px] leading-[1.25] text-center mb-10">
-          Features & Credit Schedule
+        <h2 className="font-heading font-semibold text-[32px] md:text-[40px] leading-[1.25] text-center mb-4">
+          Complete features and credit schedule
         </h2>
+        <p className="font-body text-lg text-warm-gray text-center mb-10 max-w-[700px] mx-auto">
+          Every API call has a transparent credit cost. Plan your usage with confidence.
+        </p>
 
         {/* Tabs */}
         <div className="flex gap-1 border-b border-bg-neutral mb-0 overflow-x-auto">
@@ -134,19 +137,19 @@ export default function FeatureComparison() {
                   Feature
                 </th>
                 <th className="text-right font-heading font-semibold text-base py-3 px-4 w-[110px]">
-                  Credits
+                  Credit Cost
                 </th>
                 <th className="text-center font-heading font-semibold text-base py-3 w-[90px]">
                   Free
                 </th>
                 <th className="text-center font-heading font-semibold text-base py-3 w-[90px]">
-                  Starter
+                  Essentials
                 </th>
                 <th className="text-center font-heading font-semibold text-base py-3 w-[90px]">
                   Standard
                 </th>
                 <th className="text-center font-heading font-semibold text-base py-3 w-[90px]">
-                  Pro
+                  Professional
                 </th>
               </tr>
             </thead>
