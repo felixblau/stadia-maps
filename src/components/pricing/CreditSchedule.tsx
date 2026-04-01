@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 const creditRows = [
   { category: "Basemaps", items: [
     { name: "Standard Vector Basemaps", credits: "1 per tile" },
@@ -28,9 +26,6 @@ const creditRows = [
 ]
 
 export default function CreditSchedule() {
-  const [activeTab, setActiveTab] = useState(0)
-  const activeGroup = creditRows[activeTab]
-
   return (
     <section className="px-6 md:px-20 py-16 max-w-[1440px] mx-auto">
       <h2 className="font-heading font-semibold text-[32px] md:text-[40px] leading-[1.25] text-center mb-4">
@@ -40,49 +35,41 @@ export default function CreditSchedule() {
         Every API call has a transparent credit cost. Plan your usage with confidence.
       </p>
 
-      <div className="max-w-[900px] mx-auto">
-        {/* Tabs */}
-        <div className="flex gap-1 border-b border-bg-neutral mb-0 overflow-x-auto">
-          {creditRows.map((group, i) => (
-            <button
-              key={group.category}
-              onClick={() => setActiveTab(i)}
-              className={`px-4 py-2.5 font-heading font-semibold text-sm whitespace-nowrap transition-colors cursor-pointer rounded-t-lg ${
-                i === activeTab
-                  ? "bg-white text-primary border border-bg-neutral border-b-white -mb-px"
-                  : "text-warm-gray hover:text-text"
-              }`}
-            >
-              {group.category}
-            </button>
-          ))}
-        </div>
-
-        {/* Table for active tab */}
-        <div className="bg-white rounded-b-lg">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b-2 border-primary">
-                <th className="text-left font-heading font-semibold text-base py-3 px-4">
-                  Request Type
-                </th>
-                <th className="text-right font-heading font-semibold text-base py-3 px-4 w-[200px]">
-                  Credit Cost
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {activeGroup.items.map((item) => (
-                <tr key={item.name} className="border-b border-bg-neutral">
-                  <td className="font-body text-base py-2.5 px-4">{item.name}</td>
-                  <td className="font-mono text-sm text-warm-gray py-2.5 px-4 text-right">
-                    {item.credits}
+      <div className="max-w-[900px] mx-auto bg-white rounded-lg overflow-hidden">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b-2 border-primary">
+              <th className="text-left font-heading font-semibold text-base py-3 px-4">
+                Request Type
+              </th>
+              <th className="text-right font-heading font-semibold text-base py-3 px-4 w-[200px]">
+                Credit Cost
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {creditRows.map((group) => (
+              <>
+                <tr key={group.category}>
+                  <td
+                    colSpan={2}
+                    className="font-heading font-semibold text-sm uppercase tracking-wider pt-5 pb-2 px-4 text-warm-gray"
+                  >
+                    {group.category}
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                {group.items.map((item) => (
+                  <tr key={item.name} className="border-b border-bg-neutral">
+                    <td className="font-body text-base py-2.5 px-4">{item.name}</td>
+                    <td className="font-mono text-sm text-warm-gray py-2.5 px-4 text-right">
+                      {item.credits}
+                    </td>
+                  </tr>
+                ))}
+              </>
+            ))}
+          </tbody>
+        </table>
       </div>
     </section>
   )
