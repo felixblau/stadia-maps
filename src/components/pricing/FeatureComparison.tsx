@@ -128,46 +128,52 @@ export default function FeatureComparison() {
           ))}
         </div>
 
-        {/* Unified table */}
-        <div className="bg-white rounded-b-lg overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b-2 border-primary">
-                <th className="text-left font-heading font-semibold text-base py-3 px-4">
-                  Feature
-                </th>
-                <th className="text-right font-heading font-semibold text-base py-3 px-4 w-[110px]">
-                  Credit Cost
-                </th>
-                <th className="text-center font-heading font-semibold text-base py-3 w-[90px]">
-                  Free
-                </th>
-                <th className="text-center font-heading font-semibold text-base py-3 w-[90px]">
-                  Essentials
-                </th>
-                <th className="text-center font-heading font-semibold text-base py-3 w-[90px]">
-                  Standard
-                </th>
-                <th className="text-center font-heading font-semibold text-base py-3 w-[90px]">
-                  Professional
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {activeGroup.items.map((item) => (
-                <tr key={item.name} className="border-b border-bg-neutral">
-                  <td className="font-body text-base py-2.5 px-4">{item.name}</td>
-                  <td className="font-mono text-sm text-warm-gray py-2.5 px-4 text-right whitespace-nowrap">
-                    {item.credits ?? "—"}
-                  </td>
-                  <td className="py-2.5"><Cell value={item.free} /></td>
-                  <td className="py-2.5"><Cell value={item.starter} /></td>
-                  <td className="py-2.5"><Cell value={item.standard} /></td>
-                  <td className="py-2.5"><Cell value={item.pro} /></td>
+        {/* Table with sticky first column on mobile */}
+        <div className="bg-white rounded-b-lg relative">
+          {/* Fade hint for mobile scroll */}
+          <div className="md:hidden pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent z-10" />
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[700px]">
+              <thead>
+                <tr className="border-b-2 border-primary">
+                  <th className="text-left font-heading font-semibold text-sm md:text-base py-3 px-3 md:px-4 sticky left-0 bg-white z-[1] min-w-[140px]">
+                    Feature
+                  </th>
+                  <th className="text-right font-heading font-semibold text-sm md:text-base py-3 px-3 md:px-4 w-[100px] md:w-[110px]">
+                    Credit Cost
+                  </th>
+                  <th className="text-center font-heading font-semibold text-sm md:text-base py-3 w-[80px] md:w-[90px]">
+                    Free
+                  </th>
+                  <th className="text-center font-heading font-semibold text-sm md:text-base py-3 w-[80px] md:w-[90px]">
+                    Essentials
+                  </th>
+                  <th className="text-center font-heading font-semibold text-sm md:text-base py-3 w-[80px] md:w-[90px]">
+                    Standard
+                  </th>
+                  <th className="text-center font-heading font-semibold text-sm md:text-base py-3 w-[80px] md:w-[90px]">
+                    Professional
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {activeGroup.items.map((item) => (
+                  <tr key={item.name} className="border-b border-bg-neutral">
+                    <td className="font-body text-sm md:text-base py-2.5 px-3 md:px-4 sticky left-0 bg-white z-[1]">
+                      {item.name}
+                    </td>
+                    <td className="font-mono text-xs md:text-sm text-warm-gray py-2.5 px-3 md:px-4 text-right whitespace-nowrap">
+                      {item.credits ?? "—"}
+                    </td>
+                    <td className="py-2.5"><Cell value={item.free} /></td>
+                    <td className="py-2.5"><Cell value={item.starter} /></td>
+                    <td className="py-2.5"><Cell value={item.standard} /></td>
+                    <td className="py-2.5"><Cell value={item.pro} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
